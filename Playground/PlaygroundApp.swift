@@ -10,23 +10,22 @@ import SwiftData
 
 @main
 struct PlaygroundApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
+    init() {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        
+        let sysname = String(decoding: withUnsafeBytes(of: systemInfo.sysname.self) { [UInt8]($0) }, as: UTF8.self)
+        let nodename = String(decoding: withUnsafeBytes(of: systemInfo.nodename.self) { [UInt8]($0) }, as: UTF8.self)
+        let release = String(decoding: withUnsafeBytes(of: systemInfo.release.self) { [UInt8]($0) }, as: UTF8.self)
+        let version = String(decoding: withUnsafeBytes(of: systemInfo.version.self) { [UInt8]($0) }, as: UTF8.self)
+        let machine = String(decoding: withUnsafeBytes(of: systemInfo.machine.self) { [UInt8]($0) }, as: UTF8.self)
+        
+        print(sysname, nodename, release, version, machine)
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(sharedModelContainer)
     }
 }
