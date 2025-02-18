@@ -10,7 +10,9 @@ import TipKit
 
 struct RecipeView: View {
     @State private var expanded: [Int: Bool] = [:]
+    #if !os(macOS)
     @State private var ingredientsSheetPresented = false
+    #endif
     
     @State private var amount = 10
     
@@ -70,6 +72,7 @@ struct RecipeView: View {
             }
             .scrollClipDisabled()
             .navigationTitle("Cookies")
+            #if !os(macOS)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -127,6 +130,7 @@ struct RecipeView: View {
                 }
                 .presentationDetents([.medium, .large])
             }
+            #endif
         }
     }
 }
@@ -263,7 +267,9 @@ private struct EditAmountMenu<Content: View>: View {
             label
         }
         .buttonStyle(.plain)
+        #if !os(macOS)
         .menuActionDismissBehavior(.disabled)
+        #endif
         .popoverTip(EditAmountTip())
     }
 }

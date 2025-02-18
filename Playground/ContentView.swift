@@ -10,12 +10,8 @@ import SwiftData
 
 struct ContentView: View {
     var body: some View {
-        NavigationSplitView {
-            NavigationLink(destination: RecipeView()) {
-                Text("Recepie")
-            }
-        } detail: {
-            Text("Hello, World!")
+        NavigationStack {
+            NavigationLink("Recipe View", destination: RecipeView())
         }
     }
 }
